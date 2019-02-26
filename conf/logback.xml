@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="5 seconds" debug="true">
+
+
+
+
+
+	<appender name="COMOPNENT_LOG"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/tmp/coola-tracker.log</file>
+        <append>true</append>
+        <!--<prudent>true</prudent> -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>/tmp/coola-agent.%i.log.zip</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>10</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>100MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <immediateFlush>true</immediateFlush>
+            <charset>UTF-8</charset>
+            <pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+
+	<appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="COMOPNENT_LOG" />
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.cooladata" level="DEBUG">
+        <appender-ref ref="ASYNC"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+
+</configuration>
